@@ -37,6 +37,36 @@ for r in replies:
 		if a and b:
 			texto = texto.replace(a.outerHtml(), "@" + b.html())
 		f.write("@{}: {}\n".format(username, texto))
+f.write("\n\n".format(username, texto))
+
+
+##	Extraer retweet's usernames
+f_retweet= open("retweet.html","r+")
+page = f_retweet.read()
+f_retweet.close()
+
+pagina = pq(page)
+usernames = pq(pagina(".js-user-profile-link"))
+##	Guardando usuarios en .txt
+f.write("Retweets: \n")
+for username in usernames:
+	username_ = pq(username).attr("href").replace("/","@")
+	f.write("{}\n".format(username_))
+f.write("\n\n".format(username, texto))
+
+##	Extraer likes' usernames
+f_likes= open("likes.html","r+")
+page = f_likes.read()
+f_likes.close()
+
+pagina = pq(page)
+usernames = pq(pagina(".js-user-profile-link"))
+##	Guardando usuarios en .txt
+f.write("Likes: \n")
+for username in usernames:
+	username_ = pq(username).attr("href").replace("/","@")
+	f.write("{}\n".format(username_))
+
+
+
 f.close()
-
-
